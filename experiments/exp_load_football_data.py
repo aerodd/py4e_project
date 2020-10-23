@@ -79,7 +79,8 @@ cur.executescript('''
 
         create table if not exists Competitions (
         comp_id integer primary key autoincrement,
-        name text unique );
+        name text unique,
+        completed boolean );
 
         create table if not exists CompetitionClub (
         comp_id integer,
@@ -177,6 +178,7 @@ for file in resultfiles:
         continue
 
     compname = js['name'].strip()
+    compcomplete = True
     print('\tLoading {} match data'.format(compname))
 
     if 'rounds' in js:
@@ -218,7 +220,6 @@ for file in resultfiles:
                 conn.commit()
 
 
-
     if 'matches' in js:
 
         for match in js['matches']:
@@ -256,6 +257,17 @@ for file in resultfiles:
                         ''', (matchdate, team1id, team2id, team1score, team2score, compid))
 
                 conn.commit()
+            else:
+                compcomplete = False
+
+    cur.execute('''
+            update Competitions
+            set completed = ?
+            where comp_id = ?
+            ''', (compcomplete, compid ))
+
+    conn.commit()
+
 
 
 conn.close()
