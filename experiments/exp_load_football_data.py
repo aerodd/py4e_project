@@ -56,7 +56,7 @@ for file in filepaths:
     else:
         resultfiles.append(file)
 
-# Create SQLite database to hold data
+# Create/Connect to SQLite database to hold data
 conn = sqlite3.connect('footballdata.sqlite')
 cur = conn.cursor()
 
