@@ -1,0 +1,31 @@
+  <html>
+  <head>
+    <script type="text/javascript" src="gline_points.js"></script>
+    <script type="text/javascript" src="team_colors.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+	    var data = google.visualization.arrayToDataTable( gline );
+
+        var options = {
+          title: 'Premier League Points Earned Per Season',
+		  chartArea: {left:'10%',top:'10%', width: '70%', height: '65%'},
+		  hAxis: {slantedText: 'True', slantedTextAngle: 60},
+		  vAxis: {format: '#', viewWindow: {min: 0}},
+		  colors: team_colors,
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="curve_chart" style="width: 1000px; height: 600px"></div>
+  </body>
+</html>
+
